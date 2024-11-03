@@ -1,34 +1,26 @@
 <template>
-    <!-- Contenedor principal del ítem de tarea -->
-    <div>
-        <!-- Contenedor del título y el estado de la tarea -->
-        <div>
-            <!-- Muestra el título de la tarea y aplica un estilo tachado si la tarea está completada -->
-            <!-- Comentario: Cambia este estilo o agrega clases personalizadas -->
-            <h5 :style="{ textDecoration: completed ? 'line-through' : 'none' }">
+    <!-- Contenedor principal de la tarea -->
+    <div class="card mb-3 p-3">
+        <!-- Título y estado -->
+        <div class="d-flex justify-content-between align-items-center">
+            <!-- Título con estilo tachado si está completada -->
+            <h5 :class="{ 'text-decoration-line-through': completed }">
                 {{ title }}
             </h5>
-
-            <!-- Muestra si la tarea está Completada o Pendiente -->
-            <!-- Comentario: Puedes cambiar este texto o agregar etiquetas visuales (por ejemplo, con colores o iconos) -->
-            <span>
+            <!-- Estado de la tarea -->
+            <span :class="completed ? 'badge bg-success' : 'badge bg-warning'">
                 {{ completed ? 'Completada' : 'Pendiente' }}
             </span>
         </div>
 
-        <!-- Contenedor de botones de acción -->
-        <div>
-            <!-- Botón para marcar la tarea como completada o pendiente -->
-            <!-- Emite el evento 'toggle-completion' para indicar que se cambió el estado de la tarea -->
-            <!-- Comentario: Personaliza el texto, estilo o reemplaza con un ícono (ej. ✔ / ✘) -->
-            <button @click="$emit('toggle-completion')">
-                Marcar como {{ completed ? 'Pendiente' : 'Completada' }}
+        <!-- Botones de acción -->
+        <div class="mt-3">
+            <button @click="$emit('toggle-completion')" 
+                    class="btn btn-sm btn-primary me-2">
+                {{ completed ? 'Marcar como Pendiente' : 'Marcar como Completada' }}
             </button>
-
-            <!-- Botón para eliminar la tarea de la lista -->
-            <!-- Emite el evento 'delTodo' para indicar que se debe eliminar esta tarea -->
-            <!-- Comentario: Modifica el estilo, el texto, o reemplaza con un ícono como una papelera -->
-            <button @click="$emit('delTodo')">
+            <button @click="$emit('delTodo')" 
+                    class="btn btn-sm btn-danger">
                 Eliminar
             </button>
         </div>
@@ -37,20 +29,14 @@
 
 <script>
 export default {
-    // Define el nombre del componente
     name: 'TodoItem',
-
-    // Define las propiedades que este componente recibirá del componente padre
-    // Comentario: Puedes agregar más propiedades si es necesario (por ejemplo, 'dueDate' para la fecha de vencimiento)
     props: {
         title: String,      // Título de la tarea
-        completed: Boolean, // Estado de la tarea (completada o pendiente)
+        completed: Boolean  // Estado de la tarea
     }
 }
 </script>
 
 <style scoped>
-/* Puedes agregar tus propios estilos aquí */
-/* Por ejemplo, cambia el color de fondo de las tareas completadas */
-
+/* Añade tus estilos personalizados aquí */
 </style>

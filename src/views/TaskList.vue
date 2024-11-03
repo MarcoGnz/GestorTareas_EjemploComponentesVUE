@@ -1,18 +1,42 @@
 <template>
-    <div>
-        <h1>Lista de Tareas</h1>
-        <button @click="fetchTasks">Cargar Tareas</button>
+    <div class="container mt-4">
+        <h1 class="mb-3">Lista de Tareas</h1>
+        <button @click="fetchTasks" class="btn btn-primary mb-3">Cargar Tareas</button>
+
         <div v-if="tasks.length > 0">
-            <div v-for="task in tasks" :key="task.id">
-                <div>
-                    <h5 :style="{ textDecoration: task.completed ? 'line-through' : 'none' }">{{ task.todo }}</h5>
-                    <span>{{ task.completed ? 'Completada' : 'Pendiente' }}</span>
-                    <button @click="toggleTaskCompletion(task)">
+            <div 
+                v-for="task in tasks" 
+                :key="task.id" 
+                class="card mb-2 p-3" 
+            >
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 :style="{ textDecoration: task.completed ? 'line-through' : 'none' }">
+                        {{ task.todo }}
+                    </h5>
+                    <span class="badge" :class="task.completed ? 'bg-success' : 'bg-warning'">
+                        {{ task.completed ? 'Completada' : 'Pendiente' }}
+                    </span>
+                </div>
+                
+                <div class="d-flex mt-2">
+                    <button 
+                        @click="toggleTaskCompletion(task)" 
+                        class="btn btn-sm" 
+                        :class="task.completed ? 'btn-secondary' : 'btn-success'"
+                    >
                         {{ task.completed ? 'Desmarcar' : 'Completar' }}
                     </button>
-                    <button @click="deleteTask(task)">Eliminar</button>
+                    <button 
+                        @click="deleteTask(task)" 
+                        class="btn btn-sm btn-danger ms-2"
+                    >
+                        Eliminar
+                    </button>
                 </div>
             </div>
+        </div>
+        <div v-else>
+            <p>No hay tareas disponibles. Haz clic en "Cargar Tareas" para verlas.</p>
         </div>
     </div>
 </template>
@@ -22,31 +46,34 @@ export default {
     name: "TaskList",
     data() {
         return {
-            tasks: [], // Almacenamiento local de las tareas traídas de la API
+            tasks: [] // Almacenamiento de tareas
         };
     },
     methods: {
-        // Llamada para obtener las tareas desde la API externa
-        fetchTasks() {
-            // Aquí deberían realizar la solicitud a la API usando axios o fetch.
-            // La URL que usaremos es: https://dummyjson.com/todos
-
-            // Sugerencia: Intentar implementarlo con axios o fetch
+        // Obtiene las tareas de la API
+        async fetchTasks() {
+            try {
+                const response = await fetch('https://dummyjson.com/todos');
+                const data = await response.json();
+                this.tasks = data.todos;
+            } catch (error) {
+                console.error('Error al cargar las tareas:', error);
+            }
         },
 
-        // Cambiar el estado de una tarea (completada/no completada)
+        // Cambia el estado de completado de la tarea
         toggleTaskCompletion(task) {
             task.completed = !task.completed;
         },
 
-        // Eliminar la tarea seleccionada
+        // Elimina la tarea seleccionada
         deleteTask(task) {
             this.tasks = this.tasks.filter((t) => t.id !== task.id);
-        },
-    },
+        }
+    }
 };
 </script>
 
 <style scoped>
-/* Aquí pueden experimentar con estilos de tu preferencia */
+/* Estilos de personalización */
 </style>

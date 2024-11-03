@@ -2,6 +2,9 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import AddTask from '@/views/AddTask.vue';
+import TaskList from '@/views/TaskList.vue';
+import FatherComponent from '@/views/FatherComponent.vue';
+
 // Importa los otros componentes en esta sección
 
 Vue.use(VueRouter);
@@ -26,7 +29,18 @@ const routes = [
     component: AddTask // Aquí se debe cargar el componente AddTask
     // Implementa la lógica para añadir nuevas tareas.
   },
-
+  {
+    path: '/tasklist',
+    name: 'TaskList', // Ruta para añadir tareas
+    component: TaskList // Aquí se debe cargar el componente AddTask
+    // Implementa la lógica para añadir nuevas tareas.
+  },
+  {
+    path: '/export_component',
+    name: 'ExportComponent', // Ruta para añadir tareas
+    component: FatherComponent // Aquí se debe cargar el componente AddTask
+    // Implementa la lógica para añadir nuevas tareas.
+  },
   // Las demás rutas deben ir aquí también
 ];
 
