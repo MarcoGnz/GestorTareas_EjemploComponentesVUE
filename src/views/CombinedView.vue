@@ -1,6 +1,7 @@
 <template>
     <div>
         <h1>Lista de Tareas</h1>
+        
         <!-- Esta seccion es una combinación de las dos vistas anteriores -->
     </div>
 </template>
